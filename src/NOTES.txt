@@ -1,0 +1,43 @@
+
+Edit cross-origin resource sharing (CORS)
+
+Step 1 : Create a s3-Bucket 
+Step 2 : Permission 
+Step 3 : Edit Croos Origin Resource 
+
+Notes: First Its creating a presigned URL then url is used a PUT request in POSTMAN  
+
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "PUT"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": []
+    }
+]
+
+//Bucket Policy
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::924724008418:user/highlite_srijan"
+            },
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+            ],
+            "Resource": "arn:aws:s3:::highlite-bucket/*"
+        }
+    ]
+}
