@@ -7,5 +7,7 @@ export declare class UploadVideoController {
         status: number;
         candidateVideoId: string;
     } | undefined>;
-    getCandudateVideoByCandidateId(candidateId: string): Promise<import("../../../schemas/upload.candidate.section/upload.video.schema").UploadCandidateVideo[]>;
+    getCandudateVideoByCandidateId(candidateId: string): Promise<{
+        items: import("../../../schemas/upload.candidate.section/upload.video.schema").UploadCandidateVideo[];
+    }>;
 }

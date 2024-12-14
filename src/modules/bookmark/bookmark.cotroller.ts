@@ -1,9 +1,10 @@
-import { Body, Controller, Post , Get , Query, Param } from "@nestjs/common";
+import { Body, Controller, Post , Get , Query, Param, HttpException, HttpStatus } from "@nestjs/common";
 import { ApiTags , ApiQuery  } from "@nestjs/swagger";
 import { BookmarkCollectionDTO } from "src/dtos/bookmark/bookmark.collection.dto";
 import {v4 as uuid4} from 'uuid' ; 
 import { BookmarkService } from "./bookmark.service";
 import { BookmarkCollectionItemResponse } from "src/dtos/bookmark/bookmark.collection.item.resonse";
+import { BookmarkInfoDTO } from "src/dtos/bookmark/bookmark.info.dto";
 
 @Controller()
 @ApiTags('Bookmark')
@@ -23,6 +24,7 @@ export class BookmarkController {
 
 
 
+
     @Post('bookmarkDetails')
     async bookmarkDetails(@Body() bookmarkCollectionDTO :BookmarkCollectionDTO){
 
@@ -37,6 +39,32 @@ export class BookmarkController {
     }
 
 
+   @Post('addBookmarkInfo')
+   async addBookmarkInfo(@Body() bookmarkInfoDto : BookmarkInfoDTO): Promise<any>{
+
+    
+        
+    try{
+
+        const addBookmarkInfo = await this.bookmarkService.addBookmarkInfo(bookmarkInfoDto);
+        return {
+            success: true , 
+            message : "Bookmark info added successfully" , 
+            data: addBookmarkInfo 
+        } ; 
+    } catch(error){
+         throw new HttpException(
+
+            {
+                success : false , 
+                message : error.message 
+
+            } , 
+            HttpStatus.BAD_REQUEST
+         );
+    }
+       
+   }
 
     @Get('fetchBookmarkDetails/:userId')
     @ApiQuery({ name: 'nextToken', required: false }) 

@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const bookmark_collection_dto_1 = require("../../dtos/bookmark/bookmark.collection.dto");
 const uuid_1 = require("uuid");
 const bookmark_service_1 = require("./bookmark.service");
+const bookmark_info_dto_1 = require("../../dtos/bookmark/bookmark.info.dto");
 let BookmarkController = class BookmarkController {
     constructor(bookmarkService) {
         this.bookmarkService = bookmarkService;
@@ -39,6 +40,22 @@ let BookmarkController = class BookmarkController {
             message: "Bookmark details stored successfuylly"
         };
     }
+    async addBookmarkInfo(bookmarkInfoDto) {
+        try {
+            const addBookmarkInfo = await this.bookmarkService.addBookmarkInfo(bookmarkInfoDto);
+            return {
+                success: true,
+                message: "Bookmark info added successfully",
+                data: addBookmarkInfo
+            };
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                success: false,
+                message: error.message
+            }, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
     async getBookmarkDetails(userId, nextToken) {
         const nextTokenId = await this.getNextToken(nextToken);
         const companyFeedResponse = this.bookmarkService.getBookmarkDetails(userId, nextTokenId);
@@ -53,6 +70,13 @@ __decorate([
     __metadata("design:paramtypes", [bookmark_collection_dto_1.BookmarkCollectionDTO]),
     __metadata("design:returntype", Promise)
 ], BookmarkController.prototype, "bookmarkDetails", null);
+__decorate([
+    (0, common_1.Post)('addBookmarkInfo'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [bookmark_info_dto_1.BookmarkInfoDTO]),
+    __metadata("design:returntype", Promise)
+], BookmarkController.prototype, "addBookmarkInfo", null);
 __decorate([
     (0, common_1.Get)('fetchBookmarkDetails/:userId'),
     (0, swagger_1.ApiQuery)({ name: 'nextToken', required: false }),

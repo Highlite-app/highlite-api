@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import {Model} from 'mongoose' ; 
+import {isValidObjectId, Model , Types } from 'mongoose' ; 
 import { BookmarkCollection } from "src/dtos/bookmark/bookmark.collection";
 import { BookmarkCollectionDTO } from "src/dtos/bookmark/bookmark.collection.dto";
 import { Bookmark } from "src/schemas/bookmark/bookmark.schema";
@@ -23,6 +23,7 @@ import { CompanyHomeFeedDetailsDTO } from "src/dtos/home_feed/company/company.ho
 import { CompanyJobPostVideoFeedDTO } from "src/dtos/company/company.job.post.video.feed.dto";
 import { BookmarkInfoDTO } from "src/dtos/bookmark/bookmark.info.dto";
 import { v4 as uuid4} from 'uuid' ; 
+import { NotFoundError } from "rxjs";
 
 
 @Injectable()
@@ -56,6 +57,37 @@ private readonly companyService : CompanyService ,
         const saveBookmarkDetails = await bookmarkDetails.save() ; 
         return saveBookmarkDetails ; 
     }
+
+    async addBookmarkInfo(bookmarkInfoDto : BookmarkInfoDTO): Promise<any>{
+
+        const {bookmarkCollectionId , type , referenceId , candidateId , companyId } = bookmarkInfoDto ; 
+
+          const bookmarkId = bookmarkCollectionId ; 
+         
+         const bookmarkCollection = await this.bookmarkModel.findOne({bookmarkId}) ; 
+
+         if(!bookmarkCollection){
+
+            throw  new NotFoundException("No Collection found with the given bookmarkcollectionId "+": "+ bookmarkCollectionId) ;
+         }
+
+         const newBookmarkInfo = {
+            bookmarkInfoId : uuid4() , 
+            type , 
+            bookmarkCollectionId , 
+            referenceId , 
+            candidateId , 
+            companyId , 
+
+         } ; 
+
+         bookmarkCollection.bookmarkInfo.push(newBookmarkInfo) ; 
+
+         await bookmarkCollection.save() ;
+         
+         return newBookmarkInfo ;  
+         
+        }
 
     async getAllBookmarkDetail() : Promise<BookmarkCollection[]>{
         const allBookmarkDetails = await this.bookmarkModel.find() ; 

@@ -46,6 +46,25 @@ let BookmarkService = class BookmarkService {
         const saveBookmarkDetails = await bookmarkDetails.save();
         return saveBookmarkDetails;
     }
+    async addBookmarkInfo(bookmarkInfoDto) {
+        const { bookmarkCollectionId, type, referenceId, candidateId, companyId } = bookmarkInfoDto;
+        const bookmarkId = bookmarkCollectionId;
+        const bookmarkCollection = await this.bookmarkModel.findOne({ bookmarkId });
+        if (!bookmarkCollection) {
+            throw new common_1.NotFoundException("No Collection found with the given bookmarkcollectionId " + ": " + bookmarkCollectionId);
+        }
+        const newBookmarkInfo = {
+            bookmarkInfoId: (0, uuid_1.v4)(),
+            type,
+            bookmarkCollectionId,
+            referenceId,
+            candidateId,
+            companyId,
+        };
+        bookmarkCollection.bookmarkInfo.push(newBookmarkInfo);
+        await bookmarkCollection.save();
+        return newBookmarkInfo;
+    }
     async getAllBookmarkDetail() {
         const allBookmarkDetails = await this.bookmarkModel.find();
         return allBookmarkDetails;

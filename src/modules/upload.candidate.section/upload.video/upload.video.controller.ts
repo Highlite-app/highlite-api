@@ -43,8 +43,13 @@ export class UploadVideoController{
   async  getCandudateVideoByCandidateId( @Param('candidateId') candidateId: string)  {
 
     try{
-      const getCandidateVideoByCandidateId = this.uploadVideService.getAllCandidateVideByCandidateId(candidateId) ; 
-      return getCandidateVideoByCandidateId ; 
+      const getCandidateVideoByCandidateId =  await this.uploadVideService.getAllCandidateVideByCandidateId(candidateId) ; 
+
+      return {
+        
+        "items": getCandidateVideoByCandidateId
+      }
+   
     }
     catch (error) {
       if (error instanceof ConflictException) {

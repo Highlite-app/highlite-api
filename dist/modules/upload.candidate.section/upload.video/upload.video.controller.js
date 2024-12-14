@@ -38,8 +38,10 @@ let UploadVideoController = class UploadVideoController {
     }
     async getCandudateVideoByCandidateId(candidateId) {
         try {
-            const getCandidateVideoByCandidateId = this.uploadVideService.getAllCandidateVideByCandidateId(candidateId);
-            return getCandidateVideoByCandidateId;
+            const getCandidateVideoByCandidateId = await this.uploadVideService.getAllCandidateVideByCandidateId(candidateId);
+            return {
+                "items": getCandidateVideoByCandidateId
+            };
         }
         catch (error) {
             if (error instanceof common_1.ConflictException) {

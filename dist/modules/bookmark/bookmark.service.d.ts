@@ -30,6 +30,7 @@ import { UploadCandidateService } from "../upload.candidate.section/upload.resum
 import { UploadVideService } from "../upload.candidate.section/upload.video/upload.video.service";
 import { BookmarkCollectionItemResponse } from "src/dtos/bookmark/bookmark.collection.item.resonse";
 import { CompanyService } from "../company/company.service";
+import { BookmarkInfoDTO } from "src/dtos/bookmark/bookmark.info.dto";
 export declare class BookmarkService {
     private readonly bookmarkModel;
     private readonly candidateService;
@@ -38,6 +39,7 @@ export declare class BookmarkService {
     private readonly companyService;
     constructor(bookmarkModel: Model<any>, candidateService: CandidateService, uploadCandidateServie: UploadCandidateService, uploadVideoService: UploadVideService, companyService: CompanyService);
     bookmark(bookmarkCollectionDto: BookmarkCollectionDTO, bookmarkId: string): Promise<any>;
+    addBookmarkInfo(bookmarkInfoDto: BookmarkInfoDTO): Promise<any>;
     getAllBookmarkDetail(): Promise<BookmarkCollection[]>;
     getBookmarkDetailByUserId(userId: string): Promise<BookmarkCollectionDTO[]>;
     getBookmarkDetails(userId: string, nextToken?: string | null | undefined): Promise<BookmarkCollectionItemResponse>;
