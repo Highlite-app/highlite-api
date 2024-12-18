@@ -1,4 +1,4 @@
-import { Body, Controller, Post , Get , Query, Param, HttpException, HttpStatus } from "@nestjs/common";
+import { Body, Controller, Post , Get , Query, Param, HttpException, HttpStatus, Delete } from "@nestjs/common";
 import { ApiTags , ApiQuery  } from "@nestjs/swagger";
 import { BookmarkCollectionDTO } from "src/dtos/bookmark/bookmark.collection.dto";
 import {v4 as uuid4} from 'uuid' ; 
@@ -64,6 +64,22 @@ export class BookmarkController {
          );
     }
        
+   }
+
+   @Delete('deleteCollection/:bookmarkId')
+   async deleteCollection(@Param('bookmarkId') bookmarkId: string){
+
+    
+
+    const bookmarkCollection = await this.bookmarkService.deleteBookmarkCollection(bookmarkId);
+
+    return {
+
+        status: HttpStatus.OK , 
+        message : `${bookmarkCollection.title} is sucessfully deleted` ,
+
+    }
+
    }
 
     @Get('fetchBookmarkDetails/:userId')
