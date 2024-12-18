@@ -40,6 +40,8 @@ export declare class BookmarkService {
     constructor(bookmarkModel: Model<any>, candidateService: CandidateService, uploadCandidateServie: UploadCandidateService, uploadVideoService: UploadVideService, companyService: CompanyService);
     bookmark(bookmarkCollectionDto: BookmarkCollectionDTO, bookmarkId: string): Promise<any>;
     addBookmarkInfo(bookmarkInfoDto: BookmarkInfoDTO): Promise<any>;
+    editbookmarkCollectionName(title: string, bookmarkId: string): Promise<void>;
+    deleteBookmarkCollection(bookmarkId: string): Promise<any>;
     getAllBookmarkDetail(): Promise<BookmarkCollection[]>;
     getBookmarkDetailByUserId(userId: string): Promise<BookmarkCollectionDTO[]>;
     getBookmarkDetails(userId: string, nextToken?: string | null | undefined): Promise<BookmarkCollectionItemResponse>;

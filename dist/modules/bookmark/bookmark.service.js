@@ -65,6 +65,21 @@ let BookmarkService = class BookmarkService {
         await bookmarkCollection.save();
         return newBookmarkInfo;
     }
+    async editbookmarkCollectionName(title, bookmarkId) {
+        const collection = await this.bookmarkModel.findOne({ bookmarkId }).exec();
+        if (!collection) {
+            throw new common_1.NotFoundException(`Collection with bookmarkId:${bookmarkId} not found`);
+        }
+        const bookmarkCollection = await this.bookmarkModel.find;
+    }
+    async deleteBookmarkCollection(bookmarkId) {
+        const collection = await this.bookmarkModel.findOne({ bookmarkId }).exec();
+        if (!collection) {
+            throw new common_1.NotFoundException(`Collection with bookmarkId:${bookmarkId} not found`);
+        }
+        const bookmarkCollection = await this.bookmarkModel.findOneAndDelete({ bookmarkId }).exec();
+        return bookmarkCollection;
+    }
     async getAllBookmarkDetail() {
         const allBookmarkDetails = await this.bookmarkModel.find();
         return allBookmarkDetails;

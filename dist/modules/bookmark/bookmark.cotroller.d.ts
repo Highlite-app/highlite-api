@@ -1,3 +1,4 @@
+import { HttpStatus } from "@nestjs/common";
 import { BookmarkCollectionDTO } from "src/dtos/bookmark/bookmark.collection.dto";
 import { BookmarkService } from "./bookmark.service";
 import { BookmarkCollectionItemResponse } from "src/dtos/bookmark/bookmark.collection.item.resonse";
@@ -11,5 +12,9 @@ export declare class BookmarkController {
         message: string;
     }>;
     addBookmarkInfo(bookmarkInfoDto: BookmarkInfoDTO): Promise<any>;
+    deleteCollection(bookmarkId: string): Promise<{
+        status: HttpStatus;
+        message: string;
+    }>;
     getBookmarkDetails(userId: string, nextToken?: string): Promise<BookmarkCollectionItemResponse>;
 }

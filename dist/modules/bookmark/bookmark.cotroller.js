@@ -56,6 +56,13 @@ let BookmarkController = class BookmarkController {
             }, common_1.HttpStatus.BAD_REQUEST);
         }
     }
+    async deleteCollection(bookmarkId) {
+        const bookmarkCollection = await this.bookmarkService.deleteBookmarkCollection(bookmarkId);
+        return {
+            status: common_1.HttpStatus.OK,
+            message: `${bookmarkCollection.title} is sucessfully deleted`,
+        };
+    }
     async getBookmarkDetails(userId, nextToken) {
         const nextTokenId = await this.getNextToken(nextToken);
         const companyFeedResponse = this.bookmarkService.getBookmarkDetails(userId, nextTokenId);
@@ -77,6 +84,13 @@ __decorate([
     __metadata("design:paramtypes", [bookmark_info_dto_1.BookmarkInfoDTO]),
     __metadata("design:returntype", Promise)
 ], BookmarkController.prototype, "addBookmarkInfo", null);
+__decorate([
+    (0, common_1.Delete)('deleteCollection/:bookmarkId'),
+    __param(0, (0, common_1.Param)('bookmarkId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], BookmarkController.prototype, "deleteCollection", null);
 __decorate([
     (0, common_1.Get)('fetchBookmarkDetails/:userId'),
     (0, swagger_1.ApiQuery)({ name: 'nextToken', required: false }),

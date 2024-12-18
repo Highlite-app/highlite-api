@@ -89,6 +89,30 @@ private readonly companyService : CompanyService ,
          
         }
 
+        async editbookmarkCollectionName(title:string , bookmarkId: string){
+             
+            const collection = await this.bookmarkModel.findOne({bookmarkId}).exec() ; 
+
+            if(!collection){
+                throw new NotFoundException(`Collection with bookmarkId:${bookmarkId} not found`) ; 
+            }
+            
+            const bookmarkCollection = await this.bookmarkModel.find       
+        }
+
+        async deleteBookmarkCollection(bookmarkId: string): Promise<any>{
+
+            const collection = await this.bookmarkModel.findOne({bookmarkId}).exec() ; 
+
+            if(!collection){
+                throw new NotFoundException(`Collection with bookmarkId:${bookmarkId} not found`) ; 
+            }
+
+            const bookmarkCollection = await this.bookmarkModel.findOneAndDelete({bookmarkId}).exec() ; 
+
+            return bookmarkCollection ; 
+        }
+
     async getAllBookmarkDetail() : Promise<BookmarkCollection[]>{
         const allBookmarkDetails = await this.bookmarkModel.find() ; 
         return allBookmarkDetails ; 
